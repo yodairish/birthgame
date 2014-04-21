@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <title>Game</title>
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+  <ul id="dashboard">
+    <li></li>
+    <li></li>
+    <li></li>
+    
+    <li></li>
+    <li></li>
+    <li></li>
+    
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+  
+  <script>
+    var dashboard = document.getElementById('dashboard');
+    if (dashboard) {
+      var cells = dashboard.getElementsByTagName('li'),
+          len = cells.length;
+          
+      dashboard.addEventListener('touchstart', function(e){
+          console.log(this, e);
+        }, false);
+          
+      while(--len >= 0) {
+        cells[len].addEventListener('touchstart', function(){
+          console.log(this);
+          this.classList.toggle('done');
+        }, false);
+      }
+    }
+  </script>
+</body>
+</html>

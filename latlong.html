@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <title>Location</title>
+</head>
+<body>
+  <p><button id="getpos">Get pos</button></p>
+  <p id="statusText">Press button to get location</p>
+  <p><img id="map" src="#" width="300" height="300" /></p>
+  
+  <script>
+    var getPos = document.getElementById('getpos'),
+        statusText = document.getElementById('statusText'),
+        mapImg = document.getElementById('map');
+    
+    if (getpos) {
+      getpos.addEventListener('click', function(e){
+        e.preventDefault();
+        statusText.textContent = 'Getting location...';
+        navigator.geolocation.getCurrentPosition(function(pos){
+          var coords = pos.coords.latitude + ',' + pos.coords.longitude,
+              src = 'https://maps.googleapis.com/maps/api/staticmap?center=' + coords + '&markers=' + coords + '&zoom=14&size=400x300&sensor=false';
+          statusText.textContent = coords;
+          mapImg.src = src;
+        });
+      });
+    }
+    
+  </script>
+</body>
+</html>

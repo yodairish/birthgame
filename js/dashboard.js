@@ -100,10 +100,10 @@ Dashboard.prototype.addQuizContent = function(quizName, content) {
   this._quizzesBlock.appendChild(quizBlock);
 };
 
-Dashboard.prototype.completeCurrent = function() {
+Dashboard.prototype.completeCurrent = function(answer) {
   if (this._quizzes[this._currentQuiz] === undefined) return false;
   
-  this._quizzes[this._currentQuiz].checkAnswer();
+  return this._quizzes[this._currentQuiz].checkAnswer(answer);
 };
 
 var dashboard = new Dashboard();

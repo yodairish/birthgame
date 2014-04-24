@@ -2,7 +2,7 @@ function Quiz() {
   this._name = '';
   this.status = false;
   this._quizText = '';
-  this.correctAnswer = '';
+  this._answer = '';
   this.cell = null;
   this.htmlContent = null;
 }
@@ -46,8 +46,9 @@ Quiz.prototype.getQuizText = function() {
   return this._quizText;
 };
 
-Quiz.prototype.checkAnswer = function() {
-  console.log('check');
+Quiz.prototype.checkAnswer = function(answer) {
+  if (answer === this._answer) this._done();
+  else return false;
 };
 
 Quiz.prototype._done = function() {
@@ -55,11 +56,12 @@ Quiz.prototype._done = function() {
   
   if (this.cell) this.cell.classList.add('done');
   
-  // open dashboard
-  // check not completed Quizs and finish if not found
+  dashboard.show();
 };
 
 Quiz.prototype._open = function() {
+  if (this.status === true) return false;
+  
   dashboard.showQuizze(this.getName());
   menu.showHome();
   menu.showComplete();

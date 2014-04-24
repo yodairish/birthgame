@@ -1,6 +1,9 @@
 function Menu() {
   this._home = null;
   this._complete = null;
+  this._completeAnswer = null;
+  this._completeButton = null;
+  this._completeCollapse = null;
 }
 
 Menu.prototype.init = function() {
@@ -16,8 +19,17 @@ Menu.prototype.init = function() {
   if (!this._complete) {
     this._complete = document.getElementById('menu_complete');
     if (this._complete) {
-      this._complete.addEventListener('touchstart',
+      this._completeAnswer = document.getElementById('answer');
+      this._completeButton = document.getElementById('checkAnswer');
+      this._completeCollapse = document.getElementById('completeCollapse');
+      
+      if (this._completeAnswer && this._completeButton && this._completeCollapse) {
+        this._completeCollapse.addEventListener('touchstart',
                                       this._completeHandle.bind(this));
+                                      
+        this._completeButton.addEventListener('touchstart',
+                                      this._checkAnswer.bind(this));
+      }
     }
   }
   
@@ -33,7 +45,10 @@ Menu.prototype.hideHome = function() {
 }
 
 Menu.prototype.showComplete = function() {
-  utils.showElement(this._complete);
+  if (this._complete) {
+    utils.showElement(this._complete);
+    this._complete.classList.add('collapse');
+  }
 }
 
 Menu.prototype.hideComplete = function() {
@@ -45,7 +60,15 @@ Menu.prototype._homeHandle = function() {
 };
 
 Menu.prototype._completeHandle = function() {
-  dashboard.completeCurrent();
+  if (!this._complete) return false;
+  
+  this._complete.classList.toggle('collapse');
+};
+
+Menu.prototype._checkAnswer = function() {
+  if (!this._completeAnswer) return false;
+  
+  dashboard.completeCurrent(this._completeAnswer.value);
 };
 
 var menu = new Menu();

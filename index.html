@@ -5,9 +5,19 @@
   <meta name="viewport" content="width=device-width, user-scalable=no">
   <title>Game</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
+  
+  <script type="text/javascript" src="js/utils.js"></script>
+  <script type="text/javascript" src="js/quiz.js"></script>
+  <script type="text/javascript" src="js/dashboard.js"></script>
+  <script type="text/javascript" src="js/intro.js"></script>
+  <script type="text/javascript" src="js/menu.js"></script>
+  <script type="text/javascript" src="js/game.js"></script>
 </head>
 <body>
-  <ul id="dashboard">
+  <div id="menu_home" style="display: none"></div>
+  <div id="menu_complete" style="display: none"></div>
+
+  <ul id="dashboard" style="display: none">
     <li></li>
     <li></li>
     <li></li>
@@ -21,23 +31,32 @@
     <li></li>
   </ul>
   
+  <div id="intro">
+    <p id="introText">some text</p>
+    <button id="introClose">Начать</button>
+  </div>
+  
+  <div id="quizzesContainer" style="display: none"></div>
+  
   <script>
-    var dashboard = document.getElementById('dashboard');
-    if (dashboard) {
-      var cells = dashboard.getElementsByTagName('li'),
-          len = cells.length;
+    // var dashBoard = document.getElementById('dashboard');
+    // if (dashBoard) {
+    //   var cells = dashBoard.getElementsByTagName('li'),
+    //       len = cells.length;
           
-      dashboard.addEventListener('touchstart', function(e){
-          console.log(this, e);
-        }, false);
+    //   dashBoard.addEventListener('touchstart', function(e){
+    //       console.log(this, e);
+    //     }, false);
           
-      while(--len >= 0) {
-        cells[len].addEventListener('touchstart', function(){
-          console.log(this);
-          this.classList.toggle('done');
-        }, false);
-      }
-    }
+    //   while(--len >= 0) {
+    //     cells[len].addEventListener('touchstart', function(){
+    //       console.log(this);
+    //       this.classList.toggle('done');
+    //     }, false);
+    //   }
+    // }
+    
+    game.start();
   </script>
 </body>
 </html>

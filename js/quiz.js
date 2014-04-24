@@ -1,7 +1,7 @@
 function Quiz() {
-  this.name = '';
+  this._name = '';
   this.status = false;
-  this.QuizText = '';
+  this._quizText = '';
   this.correctAnswer = '';
   this.cell = null;
   this.htmlContent = null;
@@ -13,9 +13,10 @@ Quiz.prototype.init = function() {
     return false;
   }
   
-  this.cell = document.createElement('li');
+  dashboard.addQuizContent(this.getName(), this._createHtmlContent());
   
-  this._createHtmlContent();
+  this.cell = document.createElement('li');
+  this.cell.addEventListener('touchstart', this._open.bind(this));
   
   return this.cell;
 };
@@ -25,7 +26,7 @@ Quiz.prototype._createHtmlContent = function() {
 };
 
 Quiz.prototype.getName = function() {
-  return this.name;
+  return this._name;
 };
 
 Quiz.prototype.getStatus = function() {
@@ -42,13 +43,11 @@ Quiz.prototype.setStatus = function(newStatus) {
 };
 
 Quiz.prototype.getQuizText = function() {
-  return this.QuizText;
+  return this._quizText;
 };
 
-Quiz.prototype.checkAnswer = function(answer) {
-  if (answer !== this.correctAnswer) return false;
-  
-  this._done();
+Quiz.prototype.checkAnswer = function() {
+  console.log('check');
 };
 
 Quiz.prototype._done = function() {
@@ -60,7 +59,8 @@ Quiz.prototype._done = function() {
   // check not completed Quizs and finish if not found
 };
 
-Quiz.prototype.open = function() {
-  // close dashboard and all open Quizs
-  // show content
+Quiz.prototype._open = function() {
+  dashboard.showQuizze(this.getName());
+  menu.showHome();
+  menu.showComplete();
 };

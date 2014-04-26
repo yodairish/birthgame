@@ -54,9 +54,12 @@ Quiz.prototype.checkAnswer = function(answer) {
 Quiz.prototype._done = function() {
   this.status = true;
   
-  if (this.cell) this.cell.classList.add('done');
-  
   dashboard.show();
+  
+  // wait, for dashboard is come visible and after add class
+  if (this.cell) setTimeout(function(){
+    this.cell.classList.add('done');
+  }.bind(this), 500);
 };
 
 Quiz.prototype._open = function() {

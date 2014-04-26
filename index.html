@@ -14,26 +14,18 @@
   <script type="text/javascript" src="js/game.js"></script>
 </head>
 <body>
-  <div id="menu_home" style="display: none"></div>
+  <div id="menu_home" style="display: none">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
   <div id="menu_complete" style="display: none" class="collapse">
     <input id="answer" />
     <button id="checkAnswer">Проверить</button>
     <div id="completeCollapse"></div>
   </div>
 
-  <ul id="dashboard" style="display: none">
-    <li></li>
-    <li></li>
-    <li></li>
-    
-    <li></li>
-    <li></li>
-    <li></li>
-    
-    <li></li>
-    <li></li>
-    <li></li>
-  </ul>
+  <ul id="dashboard" style="display: none"></ul>
   
   <div id="intro">
     <p id="introText">some text</p>
@@ -43,23 +35,6 @@
   <div id="quizzesContainer" style="display: none"></div>
   
   <script>
-    // var dashBoard = document.getElementById('dashboard');
-    // if (dashBoard) {
-    //   var cells = dashBoard.getElementsByTagName('li'),
-    //       len = cells.length;
-          
-    //   dashBoard.addEventListener('touchstart', function(e){
-    //       console.log(this, e);
-    //     }, false);
-          
-    //   while(--len >= 0) {
-    //     cells[len].addEventListener('touchstart', function(){
-    //       console.log(this);
-    //       this.classList.toggle('done');
-    //     }, false);
-    //   }
-    // }
-    
     game.start();
   </script>
 </body>

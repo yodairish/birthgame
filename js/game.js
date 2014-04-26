@@ -1,5 +1,5 @@
 function Game() {
-  this._quizzes = ['poemloc', 'location'];
+  this._quizzes = ['cryptoword'];//'poemloc', 
 }
 
 Game.prototype._modulesInit = function() {

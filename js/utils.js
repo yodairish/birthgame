@@ -26,4 +26,8 @@ Utils.prototype.toUnicode = function(string) {
   return unicodeString;
 }
 
+Utils.prototype.getRandom = function(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 var utils = new Utils();

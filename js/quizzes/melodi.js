@@ -24,6 +24,7 @@ function Melodi() {
   this._phaseCorrect = false;
   this._checkingNote = -1;
   this._playTimer = 0;
+  this._delayTimer = 0;
 }
 
 Melodi.prototype = new Quiz();
@@ -178,6 +179,7 @@ Melodi.prototype._generatePhaseMelodi = function() {
 
 Melodi.prototype._activatePhase = function() {
   if (this._currentPhase >= this._countRounds) return false;
+  this._delayTimer = 0;
   this._currentPhase++;
   
   this._hideInfo();
@@ -316,12 +318,14 @@ Melodi.prototype._reset = function() {
   if (this._checkingNote >= 0) return false;
   
   clearTimeout(this._playTimer);
+  clearTimeout(this._delayTimer);
   this._currentPhase = 0;
   this._activatePhase();
 };
 
 Melodi.prototype._homeHandle = function() {
   clearTimeout(this._playTimer);
+  clearTimeout(this._delayTimer);
   this._currentPhase = 0;
   this._hidePhaseNotes();
   this._activatePhasesIndicators();
@@ -341,11 +345,12 @@ Melodi.prototype._open = function() {
 
 Melodi.prototype._completeHandle = function() {
   if (this._checkingNote >= 0 ||
-      this._currentPhase >= this._countRounds) return false;
+      this._currentPhase >= this._countRounds ||
+      this._delayTimer > 0) return false;
   
   if (this._currentPhase === 0) {
     this._changeMessage('Игра начинается!');
-    setTimeout(this._activatePhase.bind(this), 2000);
+    this._delayTimer = setTimeout(this._activatePhase.bind(this), 2000);
   } else if (this._phaseCorrect === true) {
       this._phaseCorrect = false;
       this._activatePhase();

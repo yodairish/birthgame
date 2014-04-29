@@ -46,6 +46,14 @@ Quiz.prototype.getQuizText = function() {
   return this._quizText;
 };
 
+Quiz.prototype._homeHandle = function() {
+  menu._homeHandle();
+};
+
+Quiz.prototype._completeHandle = function() {
+  menu._completeHandle();
+};
+
 Quiz.prototype.checkAnswer = function(answer) {
   if (answer === this._answer) this._done();
   else return false;

@@ -4,6 +4,9 @@ body, html, #quizzesContainer {
   height: 100%;
   overflow: hidden;
 }
+
+/* ============ DASHBOARD ================*/
+
 #dashboard {
   position: absolute;
   top: 0;
@@ -56,10 +59,12 @@ body, html, #quizzesContainer {
     -webkit-transform: rotateY(0);
 }
 
+/* ============ MENU ================*/
+
 #menu_home {
   position: absolute;
-  width: 50px;
-  height: 50px;
+  width: 10vh;
+  height: 10vh;
   background-color: #F79C56;
   top: 0;
   left: 0;
@@ -67,8 +72,8 @@ body, html, #quizzesContainer {
 }
 #menu_home > div {
   position: absolute;
-  width: 7px;
-  height: 7px;
+  width: 2vh;
+  height: 2vh;
   background-color: #C26319;
   top: 0;
   bottom: 0;
@@ -86,22 +91,22 @@ body, html, #quizzesContainer {
   background-color: #C26319;
 }
 #menu_home > div:before {
-  right: -12px;
+  right: -2.6vh;
 }
 #menu_home > div:after {
-  left: -12px;
+  left: -2.6vh;
 }
 #menu_home > div:first-child {
-  -webkit-transform: translateY(-12px);
+  -webkit-transform: translateY(-2.6vh);
 }
 #menu_home > div:last-child {
-  -webkit-transform: translateY(12px);
+  -webkit-transform: translateY(2.6vh);
 }
 
 #menu_complete {
   position: absolute;
   width: 100%;
-  height: 200px;
+  height: 30vh;
   background-color: #999;
   bottom: 0;
   right: 0;
@@ -109,8 +114,8 @@ body, html, #quizzesContainer {
 }
 
 #menu_complete.collapse {
-  width: 50px;
-  height: 50px;
+  width: 10vh;
+  height: 10vh;
   opacity: 0.8;
 }
 #menu_complete.collapse input, #menu_complete.collapse button {
@@ -119,8 +124,8 @@ body, html, #quizzesContainer {
 
 #completeCollapse {
   position: absolute;
-  width: 50px;
-  height: 50px;
+  width: 10vh;
+  height: 10vh;
   background-color: #439403;
   bottom: 0;
   right: 0;
@@ -152,7 +157,8 @@ body, html, #quizzesContainer {
   -webkit-transform: skew(-30deg, 0) translate(5px, -1px);
 }
 
-/* CRYPTO */
+/* ============ CRYPTO ================*/
+
 #quiz_cryptoword {
     height: 100%;
     overflow: hidden;
@@ -247,4 +253,115 @@ body, html, #quizzesContainer {
   height: 12vw;
   line-height: 12vw;
   color: #7A5011;
+}
+
+/* ============ MELODI ================*/
+
+#quiz_melodi .note1 { background-color: #ff0000; }
+#quiz_melodi .note2 { background-color: #00ff00; }
+#quiz_melodi .note3 { background-color: #0000ff; }
+#quiz_melodi .note4 { background-color: #aa553e; }
+#quiz_melodi .note5 { background-color: #fa35d1; }
+#quiz_melodi .note6 { background-color: #8a7f11; }
+
+#musicNote {
+  text-align: center;
+  padding: 0 14vw;
+  height: 30vh;
+}
+#musicNote li {
+  display: block;
+  position: relative;
+  width: 20vw;
+  height: 20vw;
+  max-width: 12vh;
+  max-height: 12vh;
+  margin: 1.5vw 2vw;
+  float: left;
+}
+#musicPhases {
+  text-align: center;
+  margin: 0 0 1vh;
+  height: 3vh;
+}
+#musicPhases li {
+  display: inline-block;
+  width: 25vw;
+  height: 3vh;
+  background-color: #DDEDFA;
+  margin: 0 1vw;
+}
+#musicPhases li.musicPhasesActive {
+  background-color: #5A91BE;
+}
+#musicPhaseNote {
+  text-align: center;
+  padding: 3vh 6vw;
+  height: 40vh;
+  overflow: auto;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+#musicPhaseNote li {
+  display: none;
+  position: relative;
+  width: 13vw;
+  height: 13vw;
+  border: 1px solid #bbb;
+  margin: 2vw;
+  float: left;
+}
+#musicPhaseNote li.musicPhaseNoteActive {
+  display: block;
+}
+#musicPhaseNote li.pickNote {
+  box-shadow: 0 0 5px #0000ff;
+}
+#musicInfo {
+  position: absolute;
+  width: 100%;
+  height: 90vh;
+  bottom: 0;
+  background-color: #888;
+  -webkit-transition: -webkit-transform 0.3s linear;
+  -webkit-transform: translateY(80vh);
+}
+#musicInfo.open {
+  -webkit-transform: translateY(0);
+}
+#musicMessageBoard {
+  height: 10vh;
+  text-align: center;
+  line-height: 10vh;
+  font-size: 4vh;
+  color: #222;
+}
+
+.playingNote {
+  box-shadow: 0 0 20px #00ff00;
+}
+.playingNote:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  background-color: #00ff00;
+  opacity: 0.5;
+}
+.errorNote {
+  box-shadow: 0 0 20px #ff0000;
+}
+.errorNote:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  background-color: #ff0000;
+  opacity: 0.5;
 }

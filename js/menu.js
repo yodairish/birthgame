@@ -12,7 +12,8 @@ Menu.prototype.init = function() {
   if (!this._home) {
     this._home = document.getElementById('menu_home');
     if (this._home) {
-      this._home.addEventListener('touchstart', this._homeHandle.bind(this));
+      this._home.addEventListener('touchstart',
+                                    dashboard._homeHandle.bind(dashboard));
     }
   }
   
@@ -25,7 +26,7 @@ Menu.prototype.init = function() {
       
       if (this._completeAnswer && this._completeButton && this._completeCollapse) {
         this._completeCollapse.addEventListener('touchstart',
-                                      this._completeHandle.bind(this));
+                                    dashboard._completeHandle.bind(dashboard));
                                       
         this._completeButton.addEventListener('touchstart',
                                       this._checkAnswer.bind(this));

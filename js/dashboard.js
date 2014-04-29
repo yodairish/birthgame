@@ -100,6 +100,18 @@ Dashboard.prototype.addQuizContent = function(quizName, content) {
   this._quizzesBlock.appendChild(quizBlock);
 };
 
+Dashboard.prototype._homeHandle = function() {
+  if (this._quizzes[this._currentQuiz] === undefined) return false;
+  
+  this._quizzes[this._currentQuiz]._homeHandle();
+};
+
+Dashboard.prototype._completeHandle = function() {
+  if (this._quizzes[this._currentQuiz] === undefined) return false;
+  
+  this._quizzes[this._currentQuiz]._completeHandle();
+};
+
 Dashboard.prototype.completeCurrent = function(answer) {
   if (this._quizzes[this._currentQuiz] === undefined) return false;
   

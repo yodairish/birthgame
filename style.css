@@ -412,3 +412,105 @@ body, html, #quizzesContainer {
   border-bottom: 7px solid transparent; 
   -webkit-transform: translate(9px, -7px);
 }
+
+/* ============ INSTA ================*/
+
+#instaInfo {
+  position: absolute;
+  width: 100%;
+  height: 90vh;
+  bottom: 0;
+  background-color: #888;
+  -webkit-transition: -webkit-transform 0.3s linear;
+  -webkit-transform: translateY(80vh);
+}
+#instaInfo.open {
+  -webkit-transform: translateY(0);
+}
+#instaMessageBoard {
+  height: 10vh;
+  text-align: center;
+  line-height: 10vh;
+  font-size: 4vh;
+  color: #222;
+}
+#checkPhotos {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8vh;
+  height: 8vh;
+  background-color: #fff;
+  border-left: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+}
+#checkPhotos:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto; 
+  width: 25px; 
+  height: 25px;
+  border: 3px solid #888;
+  border-right-color: transparent;
+  border-radius: 50%;
+}
+#checkPhotos:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 0;
+  height: 0; 
+  border-right: 13px solid #888; 
+  border-top: 7px solid transparent; 
+  border-bottom: 7px solid transparent; 
+  -webkit-transform: translate(9px, -7px);
+}
+.instaPhoto {
+  position: relative;
+  width: 90vw;
+  height: 90vw;
+  border: 1px solid #aaa;
+  margin: 5vw;
+}
+.instaPhoto .instaPhotoIcon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 200px;
+  height: 150px;
+  background-color: #888;
+  border-radius: 20%;
+}
+.instaPhoto .instaPhotoIcon:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 50px;
+  height: 50px;
+  border: 20px solid #fff;
+  border-radius: 50%;
+}
+.instaPhoto .instaPhotoIcon:after {
+  content: '';
+  position: absolute;
+  top: -30px;
+  left: 20px;
+  width: 50px;
+  height: 40px;
+  background-color: #888;
+}

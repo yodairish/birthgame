@@ -3,6 +3,11 @@ function Melodi() {
   this._name = 'melodi';
   this._quizText = 'Here info text';
   
+  this._countNotes = 12;
+  this._countRounds = 3;
+  this._countNotesPerPhase = this._countNotes / this._countRounds;
+  this._noteTime = 400;
+  
   this._notes = [];
   this._phaseNotes = [];
   this._pickedPhaseNote = -1;
@@ -14,9 +19,11 @@ function Melodi() {
   this._phases = [];
   this._info = null;
   this._messageBoard = null;
+  this._resetButton = null;
   
+  this._phaseCorrect = false;
   this._checkingNote = -1;
-  this._delayTimer = 0;
+  this._playTimer = 0;
 }
 
 Melodi.prototype = new Quiz();
@@ -35,11 +42,17 @@ Melodi.prototype._createHtmlContent = function() {
   this._info.textContent = this.getQuizText();
   this._info.addEventListener('touchstart', this._showInfo.bind(this));
   
+  this._resetButton = document.createElement('div');
+  this._resetButton.id = 'musicReset';
+  this._resetButton.className = 'hidden';
+  this._resetButton.addEventListener('touchstart', this._reset.bind(this));
+  
   frag.appendChild(this._messageBoard);
   frag.appendChild(this._createNotes());
   frag.appendChild(this._createPhases());
   frag.appendChild(this._createPhaseNotes());
   frag.appendChild(this._info);
+  frag.appendChild(this._resetButton);
   
   this._loadNotes();
   
@@ -69,7 +82,7 @@ Melodi.prototype._createPhases = function() {
   var phases = document.createElement('ul');
   phases.id = 'musicPhases';
   
-  for (var i = 0; i < 3; i++) {
+  for (var i = 0; i < this._countRounds; i++) {
     this._phases[i] = document.createElement('li');
     phases.appendChild(this._phases[i]);
   }
@@ -82,8 +95,9 @@ Melodi.prototype._createPhaseNotes = function() {
   container.id = 'musicPhaseNote';
   
   this._phaseNotes = [];
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < this._countNotes; i++) {
     this._phaseNotes[i] = document.createElement('li');
+    this._phaseNotes[i].textContent = i + 1;
     this._phaseNotes[i].addEventListener('touchstart', function(num){
       return function() {
         this._pickPhaseNote(num);
@@ -103,6 +117,7 @@ Melodi.prototype._hideInfo = function() {
   if (this._currentPhase === 0) this._completeHandle();
   
   this._info.classList.remove('open');
+  this._hideReset();
 };
 
 Melodi.prototype._showInfo = function() {
@@ -111,6 +126,17 @@ Melodi.prototype._showInfo = function() {
   this._changeMessage('Скрыть');
   
   this._info.classList.add('open');
+  this._showReset();
+};
+
+Melodi.prototype._hideReset = function() {
+  if (!this._resetButton) return false;
+  this._resetButton.classList.remove('hidden');
+};
+
+Melodi.prototype._showReset = function() {
+  if (!this._resetButton) return false;
+  this._resetButton.classList.add('hidden');
 };
 
 Melodi.prototype._changeMessage = function(opt_newMessage) {
@@ -127,7 +153,6 @@ Melodi.prototype._loadNotes = function() {
 };
 
 Melodi.prototype._loadNote = function(num, url) {
-  console.log(num, url);
   if (num > 6 || url === '') return false;
   
   var request = new XMLHttpRequest();
@@ -144,15 +169,15 @@ Melodi.prototype._loadNote = function(num, url) {
 
 Melodi.prototype._generatePhaseMelodi = function() {
   this._correctMelodi = [];
-  for (var i = 0, len = this._currentPhase * 5; i < len; i++) {
+  var len = this._currentPhase * this._countNotesPerPhase;
+  for (var i = 0; i < len; i++) {
     this._correctMelodi[i] = utils.getRandom(0, 5);
   }
   console.log(this._correctMelodi);
 };
 
 Melodi.prototype._activatePhase = function() {
-  if (this._currentPhase >= 3) return false;
-  if (this._delayTimer > 0) clearTimeout(this._delayTimer);
+  if (this._currentPhase >= this._countRounds) return false;
   this._currentPhase++;
   
   this._hideInfo();
@@ -174,27 +199,30 @@ Melodi.prototype._playCorrectMelody = function(opt_curNote) {
   }
   
   this._playNote(this._correctMelodi[opt_curNote]);
-  setTimeout(function(num){
+  this._playTimer = setTimeout(function(num){
     return function(){
       this._playCorrectMelody(num)
     }.bind(this)
-  }.call(this, opt_curNote + 1), 500);
+  }.call(this, opt_curNote + 1), this._noteTime);
 };
 
 Melodi.prototype._activatePhasesIndicators = function() {
-  for (var i = 0; i < 3; i++) {
-    this._phases[i].className = (i < this._currentPhase ? 'musicPhasesActive' : '');
+  for (var i = 0; i < this._countRounds; i++) {
+    this._phases[i].className = (i < this._currentPhase ?
+                                 'musicPhasesActive' :
+                                 '');
   }
 };
 
 Melodi.prototype._hidePhaseNotes = function() {
-  for (var i = 0; i < 15; i++) {
+  for (var i = 0; i < this._countNotes; i++) {
     this._phaseNotes[i].className = '';
   }
 };
 
 Melodi.prototype._activatePhaseNotes = function() {
-  for (var i = 0, last = this._currentPhase * 5; i < 15; i++) {
+  var last = this._currentPhase * this._countNotesPerPhase;
+  for (var i = 0; i < this._countNotes; i++) {
     var state =  i < last ? 'add' : 'remove';
     this._phaseNotes[i].className = (i < last ? 'musicPhaseNoteActive' : '');
     this._currentMelodi[i] = -1;
@@ -228,11 +256,9 @@ Melodi.prototype._playNote = function(noteNum) {
     return function() {
       this._notes[num].classList.remove('playingNote');
     }.bind(this);
-  }.call(this, noteNum), 500);
+  }.call(this, noteNum), this._noteTime);
   
   if (this._notesSource[noteNum] === undefined) return false;
-  
-  console.log(this._notesSource[noteNum]);
   
   var note = this._audioContext.createBufferSource();
 	note.buffer = this._notesSource[noteNum];
@@ -242,7 +268,8 @@ Melodi.prototype._playNote = function(noteNum) {
 };
 
 Melodi.prototype._isAllFill = function() {
-  for (var i = 0, last = this._currentPhase * 5; i < last; i++) {
+  var last = this._currentPhase * this._countNotesPerPhase;
+  for (var i = 0; i < last; i++) {
     if (this._currentMelodi[i] < 0) return false;
   }
   return true;
@@ -259,7 +286,6 @@ Melodi.prototype._checkCorrectNote = function() {
     this._currentPhase = 0;
     this._changeMessage('Ой, вы ошиблись :(');
     this._phaseNotes[this._checkingNote].classList.add('errorNote');
-    this._delayTimer = setTimeout(this._activatePhase.bind(this), 2000);
     this._checkingNote = -1;
     return false;
   }
@@ -267,55 +293,62 @@ Melodi.prototype._checkCorrectNote = function() {
   this._phaseNotes[this._checkingNote].classList.add('playingNote');
   if (this._checkingNote === this._correctMelodi.length - 1) {
     setTimeout(function(){
-      if (this._currentPhase >= 3) {
+      if (this._currentPhase >= this._countRounds) {
         this._changeMessage('Поздравляем!');
         setTimeout(this._done.bind(this), 2000);
       } else {
         this._changeMessage('Все верно!');
-        setTimeout(this._activatePhase.bind(this), 2000);
+        this._phaseCorrect = true;
       }
       
       this._checkingNote = -1;
-    }.bind(this), 500);
+    }.bind(this), this._noteTime);
   } else {
-    setTimeout(function() {
+    this._playTimer = setTimeout(function() {
       this._phaseNotes[this._checkingNote].classList.remove('playingNote');
       this._checkingNote++;
       this._checkCorrectNote();
-    }.bind(this), 500);
+    }.bind(this), this._noteTime);
   }
 }
 
-Melodi.prototype._checkCorrectMelodi = function() {
-  for (var i = 0, last = this._correctMelodi.length; i < last; i++) {
-    if (this._currentMelodi[i] !== this._correctMelodi[i]) return false;
-  }
-  return true;
+Melodi.prototype._reset = function() {
+  if (this._checkingNote >= 0) return false;
+  
+  clearTimeout(this._playTimer);
+  this._currentPhase = 0;
+  this._activatePhase();
 };
 
 Melodi.prototype._homeHandle = function() {
-  console.log('reset');
+  clearTimeout(this._playTimer);
+  this._currentPhase = 0;
+  this._hidePhaseNotes();
+  this._activatePhasesIndicators();
   this._showInfo();
   this._changeMessage('Начать');
-  this._currentPhase = 0;
   
   menu._homeHandle();
 };
 
 Melodi.prototype._open = function() {
   if (this.status === true) return false;
-  
+
   dashboard.showQuizze(this.getName());
   menu.showHome();
   menu.showComplete();
 };
 
 Melodi.prototype._completeHandle = function() {
-  if (this._checkingNote >= 0) return false;
+  if (this._checkingNote >= 0 ||
+      this._currentPhase >= this._countRounds) return false;
   
   if (this._currentPhase === 0) {
     this._changeMessage('Игра начинается!');
     setTimeout(this._activatePhase.bind(this), 2000);
+  } else if (this._phaseCorrect === true) {
+      this._phaseCorrect = false;
+      this._activatePhase();
   } else {
     if (!this._isAllFill()) {
       this._changeMessage('Заполните все ноты');
@@ -325,11 +358,6 @@ Melodi.prototype._completeHandle = function() {
       this._checkingNote = 0;
       this._checkCorrectNote();
     }
-    
-    // check all notes is fill
-    // check user melodi is correct
-    // if correct go to next step or finish
-    // else show message and go to 1 step
   }
 };
 

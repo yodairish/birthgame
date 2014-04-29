@@ -230,6 +230,7 @@ body, html, #quizzesContainer {
   height: 74vh;
   z-index: 2;
   padding: 3vh 2vw;
+  overflow: auto;
   -webkit-transition: -webkit-transform 0.3s linear;
   -webkit-transform: translate3d(0, 64vh, 0);
 }
@@ -305,11 +306,14 @@ body, html, #quizzesContainer {
 #musicPhaseNote li {
   display: none;
   position: relative;
-  width: 13vw;
-  height: 13vw;
+  width: 17vw;
+  height: 17vw;
+  line-height: 17vw;
+  float: left;
   border: 1px solid #bbb;
   margin: 2vw;
-  float: left;
+  font-size: 10vw;
+  color: #000;
 }
 #musicPhaseNote li.musicPhaseNoteActive {
   display: block;
@@ -364,4 +368,47 @@ body, html, #quizzesContainer {
   z-index: 5;
   background-color: #ff0000;
   opacity: 0.5;
+}
+
+#musicReset {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8vh;
+  height: 8vh;
+  background-color: #fff;
+  border-left: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+}
+#musicReset.hidden {
+  display: none;
+}
+#musicReset:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto; 
+  width: 25px; 
+  height: 25px;
+  border: 3px solid #888;
+  border-right-color: transparent;
+  border-radius: 50%;
+}
+#musicReset:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 0;
+  height: 0; 
+  border-right: 13px solid #888; 
+  border-top: 7px solid transparent; 
+  border-bottom: 7px solid transparent; 
+  -webkit-transform: translate(9px, -7px);
 }

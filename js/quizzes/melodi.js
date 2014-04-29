@@ -10,7 +10,6 @@ function Melodi() {
   this._correctMelodi = [];
   this._currentPhase = 0;
   this._audioContext = new webkitAudioContext();
-  this._audioNote = []; 
   this._notesSource = [];
   this._phases = [];
   this._info = null;
@@ -41,6 +40,8 @@ Melodi.prototype._createHtmlContent = function() {
   frag.appendChild(this._createPhases());
   frag.appendChild(this._createPhaseNotes());
   frag.appendChild(this._info);
+  
+  this._loadNotes();
   
   return frag;
 };
@@ -135,17 +136,15 @@ Melodi.prototype._loadNote = function(num, url) {
 
 	request.onload = function() {
     var buffer = this._audioContext.createBuffer(request.response, false);
-	  this.soundBuffer[num] = buffer;
+	  this._notesSource[num - 1] = buffer;
 	}.bind(this);
 	
 	request.send();
 };
 
-Melodi.prototype._generatePhaseMelodi = function(phase) {
-  if (phase < 1 || phase > 3) return false;
-  
+Melodi.prototype._generatePhaseMelodi = function() {
   this._correctMelodi = [];
-  for (var i = 0, len = phase * 5; i < len; i++) {
+  for (var i = 0, len = this._currentPhase * 5; i < len; i++) {
     this._correctMelodi[i] = utils.getRandom(0, 5);
   }
   console.log(this._correctMelodi);
@@ -158,24 +157,44 @@ Melodi.prototype._activatePhase = function() {
   
   this._hideInfo();
   
-  this._activatePhaseNotes(this._currentPhase);
-  this._generatePhaseMelodi(this._currentPhase);
-  this._activatePhasesIndicators(this._currentPhase);
+  this._generatePhaseMelodi();
+  this._activatePhasesIndicators();
+  
+  this._hidePhaseNotes();
   // play correct melodi
+  this._playCorrectMelody();
 };
 
-Melodi.prototype._activatePhasesIndicators = function(phase) {
-  if (phase < 1 || phase > 3) return false;
+Melodi.prototype._playCorrectMelody = function(opt_curNote) {
+  opt_curNote = opt_curNote || 0;
   
+  if (opt_curNote === this._correctMelodi.length) {
+    this._activatePhaseNotes();
+    return true;
+  }
+  
+  this._playNote(this._correctMelodi[opt_curNote]);
+  setTimeout(function(num){
+    return function(){
+      this._playCorrectMelody(num)
+    }.bind(this)
+  }.call(this, opt_curNote + 1), 500);
+};
+
+Melodi.prototype._activatePhasesIndicators = function() {
   for (var i = 0; i < 3; i++) {
-    this._phases[i].className = (i < phase ? 'musicPhasesActive' : '');
+    this._phases[i].className = (i < this._currentPhase ? 'musicPhasesActive' : '');
   }
 };
 
-Melodi.prototype._activatePhaseNotes = function(phase) {
-  if (phase < 1 || phase > 3) return false;
-  
-  for (var i = 0, last = phase * 5; i < 15; i++) {
+Melodi.prototype._hidePhaseNotes = function() {
+  for (var i = 0; i < 15; i++) {
+    this._phaseNotes[i].className = '';
+  }
+};
+
+Melodi.prototype._activatePhaseNotes = function() {
+  for (var i = 0, last = this._currentPhase * 5; i < 15; i++) {
     var state =  i < last ? 'add' : 'remove';
     this._phaseNotes[i].className = (i < last ? 'musicPhaseNoteActive' : '');
     this._currentMelodi[i] = -1;
@@ -213,8 +232,11 @@ Melodi.prototype._playNote = function(noteNum) {
   
   if (this._notesSource[noteNum] === undefined) return false;
   
+  console.log(this._notesSource[noteNum]);
+  
   var note = this._audioContext.createBufferSource();
 	note.buffer = this._notesSource[noteNum];
+	note.loop = false;
   note.connect(this._audioContext.destination);
   note.start(0);
 };
@@ -248,7 +270,10 @@ Melodi.prototype._checkCorrectNote = function() {
       if (this._currentPhase >= 3) {
         this._changeMessage('Поздравляем!');
         setTimeout(this._done.bind(this), 2000);
-      } else this._activatePhase();
+      } else {
+        this._changeMessage('Все верно!');
+        setTimeout(this._activatePhase.bind(this), 2000);
+      }
       
       this._checkingNote = -1;
     }.bind(this), 500);
@@ -288,8 +313,10 @@ Melodi.prototype._open = function() {
 Melodi.prototype._completeHandle = function() {
   if (this._checkingNote >= 0) return false;
   
-  if (this._currentPhase === 0) this._activatePhase();
-  else {
+  if (this._currentPhase === 0) {
+    this._changeMessage('Игра начинается!');
+    setTimeout(this._activatePhase.bind(this), 2000);
+  } else {
     if (!this._isAllFill()) {
       this._changeMessage('Заполните все ноты');
       setTimeout(this._changeMessage.bind(this), 1500);

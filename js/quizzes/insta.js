@@ -6,6 +6,7 @@ function Insta() {
   this._userID = '9723536';
   
   this._photos = [];
+  this._photosDone = 0;
   this._checking = false;
   this._info = null;
   this._messageBoard = null;
@@ -80,22 +81,23 @@ Insta.prototype._showInfo = function() {
 Insta.prototype._changeMessage = function(opt_newMessage) {
   if (!this._messageBoard) return false;
   
-  opt_newMessage = opt_newMessage || '';
+  opt_newMessage = opt_newMessage || (this._checking ? 'Loading..' :
+                                      this._photosDone + ' / 6');
   this._messageBoard.textContent = opt_newMessage;
 };
 
 Insta.prototype._updPhotos = function(photos) {
+  this._photosDone = 0;
   for (var i = 0; i < 6; i++) {
-    if (photos[i] !== undefined) this._donePhoto(photos[i]);
-    else photos[i].classList.remove('photoDone');
+    if (photos[i] !== undefined) {
+      this._photos[i].src = photos[i];
+      this._photosDone++;
+    } else this._photos[i].src = '';
   }
-};
-
-Insta.prototype._donePhoto = function(photo, pos) {
-  if (pos < 0 || pos > 6) return false;
-  
-  this._photos[i].src = photo;
-  this._photos[i].classList.add('photoDone');
+  if (this._photosDone === 6) {
+    this._changeMessage('Поздравляем!');
+    setTimeout(this._done.bind(this), 2000);
+  } else this._changeMessage();
 };
 
 Insta.prototype._checkPhotos = function() {
@@ -109,16 +111,27 @@ Insta.prototype._checkPhotos = function() {
   
   if(document.getElementsByTagName('head').length > 0)
       document.getElementsByTagName('head')[0].appendChild(this._jsonpScript);
-      
+  
+  this._hideInfo();
   this._checking = true;
+  this._changeMessage();
 };
 
 Insta.prototype._updateData = function() {
-  var data = window.tmpInstaResp;
+  var response = window.tmpInstaResp;
   delete window.tmpInstaResp;
   this._jsonpScript.remove();
+  this._checking = false;
   
-  console.log(data);
+  if (response.meta.code === 200) {
+    var photos = [],
+        end = response.data.length;
+    while(--end >= 0) {
+      photos.push(response.data[end].images.standard_resolution.url);
+    }
+    
+    this._updPhotos(photos);
+  }
 };
 
 Insta.prototype._getUrl = function() {
@@ -132,10 +145,11 @@ Insta.prototype._getUrl = function() {
   endDay = parseInt(date.getTime() / 1000);
   
   return 'https://api.instagram.com/v1/users/' + this._userID +
-         '/media/recent?min_timestamp=' + beginDay +
+         '/media/recent' +
+         '?client_id=' + this._clientID +
+         //'&min_timestamp=' + beginDay +
          '&max_timestamp=' + endDay +
          '&count=6' +
-         '&client_id=' + this._clientID +
          '&callback=instaResponse';
 }
 

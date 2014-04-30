@@ -421,6 +421,7 @@ body, html, #quizzesContainer {
   height: 90vh;
   bottom: 0;
   background-color: #888;
+  z-index: 5;
   -webkit-transition: -webkit-transform 0.3s linear;
   -webkit-transform: translateY(80vh);
 }
@@ -473,6 +474,10 @@ body, html, #quizzesContainer {
   border-bottom: 7px solid transparent; 
   -webkit-transform: translate(9px, -7px);
 }
+#instaPhotoContainer {
+  height: 80vh;
+  overflow: auto;
+}
 .instaPhoto {
   position: relative;
   width: 90vw;
@@ -491,6 +496,7 @@ body, html, #quizzesContainer {
   height: 150px;
   background-color: #888;
   border-radius: 20%;
+  z-index: 1;
 }
 .instaPhoto .instaPhotoIcon:before {
   content: '';
@@ -513,4 +519,10 @@ body, html, #quizzesContainer {
   width: 50px;
   height: 40px;
   background-color: #888;
+}
+.instaPhoto > img {
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  position: relative;
 }

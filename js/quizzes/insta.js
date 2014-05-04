@@ -153,7 +153,6 @@ Insta.prototype._getUrl = function() {
          '&callback=instaResponse';
 }
 
-
 Insta.prototype._open = function() {
   if (this.status === true) return false;
   

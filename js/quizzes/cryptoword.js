@@ -8,8 +8,10 @@ function CryptoWord() {
   ];
   this._currentStep = 1;
   
+  this._hintTime = 10000;
   this._aplhabet = null;
   this._hintsContainer = null;
+  this._hintList = null;
   this._addHint = null;
   this._timer = -1;
 }
@@ -26,15 +28,16 @@ CryptoWord.prototype._createHtmlContent = function() {
   
   cryptWord.id = 'cryptWord';
   cryptWord.textContent = cryptAnswer;
-  cryptWord.addEventListener('touchstart', this._hideAlphabet.bind(this));
+  cryptWord.addEventListener('touchstart', this._hideHint.bind(this));
   
   this._addHint = document.createElement('div');
   this._addHint.id = 'cryptAddHint';
   this._addHint.addEventListener('touchstart', function(){
     this._currentStep++;
-    this._hintsContainer.scrollTop = 0;
+    this._hintList.scrollTop = 0;
     this._showCurrentHints();
     this._addHint.classList.remove('visible');
+    this._showHint();
     this._timerButtonHint();
   }.bind(this));
   
@@ -60,25 +63,25 @@ CryptoWord.prototype._createAlphabet = function(opt_word) {
     
     this._aplhabet.appendChild(letter);
   }
-  
-  this._aplhabet.addEventListener('touchstart', this._showAlphabet.bind(this));
 };
 
-CryptoWord.prototype._showAlphabet = function() {
-  if (!this._aplhabet) return false;
+CryptoWord.prototype._showHint = function() {
+  if (!this._hintsContainer) return false;
   
-  this._aplhabet.classList.add('enable');
+  this._hintsContainer.classList.add('enable');
 };
 
-CryptoWord.prototype._hideAlphabet = function() {
-  if (!this._aplhabet) return false;
+CryptoWord.prototype._hideHint = function() {
+  if (!this._hintsContainer) return false;
   
-  this._aplhabet.classList.remove('enable');
+  this._hintsContainer.classList.remove('enable');
 };
 
 CryptoWord.prototype._createHints = function() {
-  this._hintsContainer = document.createElement('ul');
+  this._hintsContainer = document.createElement('div');
   this._hintsContainer.id = 'cryptHints';
+  this._hintsContainer.className = 'enable';
+  this._hintList = document.createElement('ul')
   
   var len = this._hints.length,
       hint;
@@ -91,8 +94,10 @@ CryptoWord.prototype._createHints = function() {
     
     if (this._currentStep === (len + 1)) hint.classList.add('visible');
     
-    this._hintsContainer.appendChild(hint);
+    this._hintList.appendChild(hint);
   }
+  this._hintsContainer.appendChild(this._hintList);
+  this._hintsContainer.addEventListener('touchstart', this._showHint.bind(this));
 };
 
 CryptoWord.prototype._showCurrentHints = function() {
@@ -130,7 +135,7 @@ CryptoWord.prototype._timerButtonHint = function() {
   this._timer = setTimeout(function() {
     this._addHint.classList.add('visible');
     this._timer = -1;
-  }.bind(this), 60000);
+  }.bind(this), this._hintTime);
 };
 
 CryptoWord.prototype._open = function() {

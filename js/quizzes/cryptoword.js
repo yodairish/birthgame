@@ -8,7 +8,7 @@ function CryptoWord() {
   ];
   this._currentStep = 1;
   
-  this._hintTime = 10000;
+  this._hintTime = 60000;
   this._aplhabet = null;
   this._hintsContainer = null;
   this._hintList = null;
@@ -27,6 +27,7 @@ CryptoWord.prototype._createHtmlContent = function() {
   this._createHints();
   
   cryptWord.id = 'cryptWord';
+  cryptWord.className = 'messageBoard';
   cryptWord.textContent = cryptAnswer;
   cryptWord.addEventListener('touchstart', this._hideHint.bind(this));
   
@@ -80,7 +81,7 @@ CryptoWord.prototype._hideHint = function() {
 CryptoWord.prototype._createHints = function() {
   this._hintsContainer = document.createElement('div');
   this._hintsContainer.id = 'cryptHints';
-  this._hintsContainer.className = 'enable';
+  this._hintsContainer.className = 'infoBoard enable';
   this._hintList = document.createElement('ul')
   
   var len = this._hints.length,

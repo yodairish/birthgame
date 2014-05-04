@@ -24,13 +24,12 @@ Insta.prototype._createHtmlContent = function() {
   checkPhoto.addEventListener('touchstart', this._checkPhotos.bind(this));
   
   this._messageBoard = document.createElement('div');
-  this._messageBoard.id = 'instaMessageBoard';
+  this._messageBoard.className = 'messageBoard';
   this._messageBoard.textContent = 'Посмотреть фото';
   this._messageBoard.addEventListener('touchstart', this._hideInfo.bind(this));
   
   this._info = document.createElement('div');
-  this._info.id = 'instaInfo';
-  this._info.className = 'open';
+  this._info.className = 'infoBoard enable';
   this._info.textContent = this.getQuizText();
   this._info.addEventListener('touchstart', this._showInfo.bind(this));
   
@@ -68,13 +67,13 @@ Insta.prototype._createInstaPhotos = function() {
 
 Insta.prototype._hideInfo = function() {
   if (!this._info) return false;
-  this._info.classList.remove('open');
+  this._info.classList.remove('enable');
   this._changeMessage();
 };
 
 Insta.prototype._showInfo = function() {
   if (!this._info) return false;
-  this._info.classList.add('open');
+  this._info.classList.add('enable');
   this._changeMessage('Посмотреть фото');
 };
 
@@ -147,7 +146,7 @@ Insta.prototype._getUrl = function() {
   return 'https://api.instagram.com/v1/users/' + this._userID +
          '/media/recent' +
          '?client_id=' + this._clientID +
-         //'&min_timestamp=' + beginDay +
+         '&min_timestamp=' + beginDay +
          '&max_timestamp=' + endDay +
          '&count=6' +
          '&callback=instaResponse';

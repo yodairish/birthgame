@@ -36,13 +36,12 @@ Melodi.prototype._createHtmlContent = function() {
   var frag = document.createDocumentFragment();
   
   this._messageBoard = document.createElement('div');
-  this._messageBoard.id = 'musicMessageBoard';
+  this._messageBoard.className = 'messageBoard';
   this._messageBoard.textContent = 'Начать';
   this._messageBoard.addEventListener('touchstart', this._hideInfo.bind(this));
   
   this._info = document.createElement('div');
-  this._info.id = 'musicInfo';
-  this._info.className = 'open';
+  this._info.className = 'infoBoard enable';
   this._info.textContent = this.getQuizText();
   this._info.addEventListener('touchstart', this._showInfo.bind(this));
   
@@ -126,7 +125,7 @@ Melodi.prototype._hideInfo = function() {
   this._changeMessage();
   if (this._currentPhase === 0) this._completeHandle();
   
-  this._info.classList.remove('open');
+  this._info.classList.remove('enable');
   this._hideReset();
 };
 
@@ -135,7 +134,7 @@ Melodi.prototype._showInfo = function() {
   
   this._changeMessage('Скрыть');
   
-  this._info.classList.add('open');
+  this._info.classList.add('enable');
   this._showReset();
 };
 

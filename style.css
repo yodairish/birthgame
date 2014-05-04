@@ -5,6 +5,68 @@ body, html, #quizzesContainer {
   overflow: hidden;
 }
 
+.messageBoard {
+  text-align: center;
+  height: 15vh;
+  background-color: #CBD8FF;
+  line-height: 15vh;
+  font-size: 7vw;
+  color: #0A2A8A;
+  padding: 0 13vw 0 25vw;
+}
+.infoBoard {
+  position: absolute;
+  bottom: 0;
+  width: 100% ;
+  height: 79vh;
+  padding: 3vh 5vw;
+  overflow: auto;
+  z-index: 10;
+  background-color: #0A2A8A;
+  color: #CBD8FF;
+  -webkit-transition: -webkit-transform 0.3s linear;
+  -webkit-transform: translate3d(0, 70vh, 0);
+}
+.infoBoard.enable {
+  -webkit-transform: translate3d(0, 0, 0)!important;
+}
+
+/* ============ INTRO ================*/
+
+#intro {
+  height: 90vh;
+  width: 90vw;
+  background-color: #CBD8FF;
+  color: #CBD8FF;
+  padding: 5vh 5vw;
+}
+#introContainer {
+  background-color: #0A2A8A;
+  height: 100%;
+  width: 90vw;
+  text-align: center;
+  line-height: 16vh;
+}
+#introText {
+  height: 71vh;
+  border-bottom: 1px solid #CBD8FF;
+  overflow: auto;
+  padding: 2vh 5vw;
+  text-align: left;
+  font-size: 7vw;
+  line-height: 7vw;
+}
+#introClose {
+  margin: auto;
+  position: relative;
+  height: 10vh;
+  width: 50vw;
+  font-size: 8vw;
+  background-color: #CBD8FF;
+  color: #0A2A8A;
+  border: none;
+}
+
 /* ============ DASHBOARD ================*/
 
 #dashboard {
@@ -157,14 +219,8 @@ body, html, #quizzesContainer {
     overflow: hidden;
 }
 #cryptWord {
-  text-align: center;
-  height: 20vh;
-  background-color: #CBD8FF;
-  line-height: 20vh;
   font-size: 15vw;
   letter-spacing: 5vw;
-  color: #0A2A8A;
-  padding: 0 13vw 0 25vw;
 }
 #cryptAddHint {
   position: absolute;
@@ -197,21 +253,11 @@ body, html, #quizzesContainer {
   height: 25px;
 }
 #cryptHints {
-  position: absolute;
-  bottom: 0;
-  height: 80vh;
-  overflow: auto;
-  z-index: 2;
-  background-color: #0A2A8A;
-  -webkit-transition: -webkit-transform 0.3s linear;
-  -webkit-transform: translate3d(0, 65vh, 0);
-}
-
-#cryptHints.enable {
-  -webkit-transform: translate3d(0, 0, 0);
+  height: 85vh;
+  padding: 0;
 }
 #cryptHints > ul {
-  height: 61vh;
+  height: 66vh;
   overflow: auto;
   border-bottom: 1px solid #CBD8FF;
   padding: 2vh;
@@ -221,7 +267,6 @@ body, html, #quizzesContainer {
   border-bottom: 3px dashed #CBD8FF;
   padding: 2vh;
   font-size: 25px;
-  color: #CBD8FF;
 }
 #cryptHints li.visible {
   display: block;
@@ -286,11 +331,11 @@ body, html, #quizzesContainer {
   display: inline-block;
   width: 25vw;
   height: 3vh;
-  background-color: #DDEDFA;
+  background-color: #CBD8FF;
   margin: 0 1vw;
 }
 #musicPhases li.musicPhasesActive {
-  background-color: #5A91BE;
+  background-color: #0A2A8A;
 }
 #musicPhaseNote {
   text-align: center;
@@ -318,28 +363,6 @@ body, html, #quizzesContainer {
 #musicPhaseNote li.pickNote {
   box-shadow: 0 0 5px #0000ff;
 }
-#musicInfo {
-  position: absolute;
-  width: 100%;
-  height: 85vh;
-  bottom: 0;
-  z-index: 10;
-  background-color: #888;
-  -webkit-transition: -webkit-transform 0.3s linear;
-  -webkit-transform: translateY(70vh);
-}
-#musicInfo.open {
-  -webkit-transform: translateY(0);
-}
-#musicMessageBoard {
-  height: 15vh;
-  text-align: center;
-  line-height: 15vh;
-  font-size: 4vh;
-  padding: 0 10vh 0 16vh;
-  color: #222;
-}
-
 .playingNote {
   box-shadow: 0 0 20px #00ff00;
 }
@@ -375,14 +398,13 @@ body, html, #quizzesContainer {
   right: 0;
   width: 8vh;
   height: 8vh;
-  background-color: #fff;
-  border-left: 1px solid #aaa;
-  border-bottom: 1px solid #aaa;
+  background-color: #5C66DD;
 }
 #musicReset.hidden {
   display: none;
 }
-#musicReset:before {
+#musicReset:before,
+#musicReset:after {
   content: '';
   position: absolute;
   top: 0;
@@ -392,21 +414,16 @@ body, html, #quizzesContainer {
   margin: auto; 
   width: 25px; 
   height: 25px;
-  border: 3px solid #888;
+}
+#musicReset:before {
+  border: 3px solid #182292;
   border-right-color: transparent;
   border-radius: 50%;
 }
 #musicReset:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
   width: 0;
   height: 0; 
-  border-right: 13px solid #888; 
+  border-right: 13px solid #182292; 
   border-top: 7px solid transparent; 
   border-bottom: 7px solid transparent; 
   -webkit-transform: translate(9px, -7px);
@@ -417,20 +434,19 @@ body, html, #quizzesContainer {
   right: 0;
   width: 8vh;
   height: 8vh;
-  border-left: 1px solid #aaa;
-  border-bottom: 1px solid #aaa;
-  border-top: 1px solid #aaa;
+  background-color: #5C66DD;
 }
 #musicRepeat.hidden {
   display: none;
 }
-#musicRepeat:before {
+#musicRepeat:before,
+#musicRepeat:after {
   content: "";
   position: absolute;
   width: 15px;
   height: 15px;
-  border-left: 3px solid #888;
-  border-top: 3px solid #888;
+  border-left: 3px solid #182292;
+  border-top: 3px solid #182292;
   top: 0;
   bottom: 0;
   left: 0;
@@ -439,17 +455,6 @@ body, html, #quizzesContainer {
   -webkit-transform: rotateZ(-45deg) skew(10deg, 10deg);
 }
 #musicRepeat:after {
-  content: "";
-  position: absolute;
-  width: 15px;
-  height: 15px;
-  border-left: 3px solid #888;
-  border-top: 3px solid #888;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
   -webkit-transform: rotateZ(-45deg) skew(10deg, 10deg) translate(6px, 6px);
 }
 
@@ -481,11 +486,13 @@ body, html, #quizzesContainer {
   right: 0;
   width: 8vh;
   height: 8vh;
-  background-color: #fff;
-  border-left: 1px solid #aaa;
-  border-bottom: 1px solid #aaa;
+  background-color: #5C66DD;
 }
-#checkPhotos:before {
+#checkPhotos.hidden {
+  display: none;
+}
+#checkPhotos:before,
+#checkPhotos:after {
   content: '';
   position: absolute;
   top: 0;
@@ -495,35 +502,30 @@ body, html, #quizzesContainer {
   margin: auto; 
   width: 25px; 
   height: 25px;
-  border: 3px solid #888;
+}
+#checkPhotos:before {
+  border: 3px solid #182292;
   border-right-color: transparent;
   border-radius: 50%;
 }
 #checkPhotos:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
   width: 0;
   height: 0; 
-  border-right: 13px solid #888; 
+  border-right: 13px solid #182292; 
   border-top: 7px solid transparent; 
   border-bottom: 7px solid transparent; 
   -webkit-transform: translate(9px, -7px);
 }
 #instaPhotoContainer {
-  height: 80vh;
+  height: 70vh;
   overflow: auto;
 }
 .instaPhoto {
   position: relative;
   width: 90vw;
   height: 90vw;
-  border: 1px solid #aaa;
   margin: 5vw;
+  background-color: #CBD8FF;
 }
 .instaPhoto .instaPhotoIcon {
   position: absolute;
@@ -534,7 +536,7 @@ body, html, #quizzesContainer {
   margin: auto;
   width: 200px;
   height: 150px;
-  background-color: #888;
+  background-color: #0A2A8A;
   border-radius: 20%;
   z-index: 1;
 }
@@ -548,7 +550,7 @@ body, html, #quizzesContainer {
   margin: auto;
   width: 50px;
   height: 50px;
-  border: 20px solid #fff;
+  border: 20px solid #CBD8FF;
   border-radius: 50%;
 }
 .instaPhoto .instaPhotoIcon:after {
@@ -558,7 +560,7 @@ body, html, #quizzesContainer {
   left: 20px;
   width: 50px;
   height: 40px;
-  background-color: #888;
+  background-color: #0A2A8A;
 }
 .instaPhoto > img {
   width: 100%;

@@ -22,6 +22,7 @@ function Melodi() {
   this._messageBoard = null;
   this._resetButton = null;
   this._repeatButton = null;
+  this._clearButton = null;
   
   this._playing = false;
   this._phaseCorrect = false;
@@ -55,6 +56,11 @@ Melodi.prototype._createHtmlContent = function() {
   this._repeatButton.className = 'hidden';
   this._repeatButton.addEventListener('touchstart', this._repeat.bind(this));
   
+  this._clearButton = document.createElement('div');
+  this._clearButton.id = 'musicClear';
+  this._clearButton.className = 'hidden';
+  this._clearButton.addEventListener('touchstart', this._activatePhaseNotes.bind(this));
+  
   frag.appendChild(this._messageBoard);
   frag.appendChild(this._createNotes());
   frag.appendChild(this._createPhases());
@@ -62,6 +68,7 @@ Melodi.prototype._createHtmlContent = function() {
   frag.appendChild(this._info);
   frag.appendChild(this._resetButton);
   frag.appendChild(this._repeatButton);
+  frag.appendChild(this._clearButton);
   
   this._loadNotes();
   
@@ -158,6 +165,16 @@ Melodi.prototype._hideRepeat = function() {
   this._repeatButton.classList.add('hidden');
 };
 
+Melodi.prototype._showClear = function() {
+  if (!this._clearButton) return false;
+  this._clearButton.classList.remove('hidden');
+};
+
+Melodi.prototype._hideClear = function() {
+  if (!this._clearButton) return false;
+  this._clearButton.classList.add('hidden');
+};
+
 Melodi.prototype._changeMessage = function(opt_newMessage) {
   if (!this._messageBoard) return false;
   
@@ -211,6 +228,7 @@ Melodi.prototype._activatePhase = function() {
   
   this._hidePhaseNotes();
   // play correct melodi
+  
   this._playCorrectMelody();
 };
 
@@ -222,6 +240,7 @@ Melodi.prototype._playCorrectMelody = function(opt_curNote, opt_repeat) {
     if (!opt_repeat) {
       this._activatePhaseNotes();
       this._showRepeat();
+      this._showClear();
     }
     this._playing = false;
     return true;
@@ -410,6 +429,8 @@ Melodi.prototype._completeHandle = function() {
       setTimeout(this._changeMessage.bind(this), 1500);
       return false;
     } else {
+      this._hideRepeat();
+      this._hideClear();
       this._checkingNote = 0;
       this._checkCorrectNote();
     }

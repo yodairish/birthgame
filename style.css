@@ -521,6 +521,39 @@ body, html, #quizzesContainer {
 #musicRepeat:after {
   -webkit-transform: rotateZ(-45deg) skew(10deg, 10deg) translate(6px, 6px);
 }
+#musicClear {
+  position: absolute;
+  top: 30vh;
+  right: 0;
+  width: 8vh;
+  height: 8vh;
+  background-color: #5C66DD;
+}
+#musicClear.hidden {
+  display: none;
+}
+#musicClear:before,
+#musicClear:after {
+  content: "";
+  position: absolute;
+  width: 4vw;
+  height: 4vw;
+  border-top: 3px solid #182292;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+#musicClear:before {
+  border-left: 3px solid #182292;
+  -webkit-transform: rotateZ(-45deg) translate(2vw, 2vw);
+}
+#musicClear:after {
+  border-right: 3px solid #182292;
+  -webkit-transform: rotateZ(45deg) translate(-2vw, 2vw);
+}
+
 
 /* ============ INSTA ================*/
 

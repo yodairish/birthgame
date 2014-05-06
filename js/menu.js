@@ -65,13 +65,19 @@ Menu.prototype._completeHandle = function() {
   
   if (this._complete.classList.contains('collapse')) {
     this._completeAnswer.value = '';
+    this._completeAnswer.classList.remove('error');
   }
   this._complete.classList.toggle('collapse');
 };
 
 Menu.prototype._checkAnswer = function() {
   if (!this._completeAnswer) return false;
-  dashboard.completeCurrent(this._completeAnswer.value);
+  if (dashboard.completeCurrent(this._completeAnswer.value) === false) {
+    this._completeAnswer.classList.add('error');
+  } else {
+    this._completeAnswer.classList.remove('error');
+    this._completeAnswer.value = '';
+  }
 };
 
 var menu = new Menu();

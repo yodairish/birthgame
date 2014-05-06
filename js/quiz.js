@@ -69,11 +69,14 @@ Quiz.prototype.checkAnswer = function(answer) {
 };
 
 Quiz.prototype._save = function() {
-  loader.save(this.getName(), '');
+  loader.save(this.getName(), {
+    status: this.status
+  });
 };
 
 Quiz.prototype.load = function() {
-  loader.load(this.getName());
+  var data = loader.load(this.getName());
+  if (data && data.status === true) this._done();
 };
 
 Quiz.prototype._done = function() {

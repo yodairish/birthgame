@@ -32,6 +32,9 @@ body, html, #quizzesContainer {
 .infoBoard.enable {
   -webkit-transform: translate3d(0, 0, 0)!important;
 }
+.infoBoard .hidden {
+  display: none;
+}
 
 /* ============ INTRO ================*/
 
@@ -232,6 +235,9 @@ body, html, #quizzesContainer {
   background-color: #CBD8FF;
   border: 1vw solid #0A2A8A;
   color: #0A2A8A;
+}
+#answer.error {
+  background-color: #DB6868;
 }
 #checkAnswer {
   width: 56vw;

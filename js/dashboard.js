@@ -70,7 +70,7 @@ Dashboard.prototype._loadQuiz = function(quizFile) {
   loadScript.onerror = function(error) {
     console.log('can\'t load quiz script: ' + error.srcElement.src);
   }
-  console.log(loadScript);
+
   document.head.appendChild(loadScript);
 };
 

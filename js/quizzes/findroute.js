@@ -159,7 +159,6 @@ FindRoute.prototype._getDistanceBetween = function(point) {
 
 FindRoute.prototype._timerTickProccess = function() {
   if (this._timerTick > 0) {
-    // show message
     this._changeMessage(this._timerTick + '..');
     this._timerTick--;
   } else this._stopTimer();

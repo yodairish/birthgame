@@ -3,7 +3,7 @@ function Loader() {
 }
 
 Loader.prototype.save = function(name, obj) {
-  console.log('save', name, obj);
+  console.log(name, obj);
   if (!this._getData()) this._data = {};
   
   this._data[name] = obj;
@@ -11,7 +11,6 @@ Loader.prototype.save = function(name, obj) {
 };
 
 Loader.prototype.load = function(name) {
-  console.log('load', name);
   if (!this._getData() || this._data[name] === undefined) return false;
   
   console.log('loadResult: ', this._data[name]);

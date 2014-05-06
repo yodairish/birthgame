@@ -141,11 +141,10 @@ CryptoWord.prototype._timerButtonHint = function() {
 };
 
 CryptoWord.prototype._save = function() {
-  var saveData = {
+  loader.save(this.getName(), {
     status: this.status,
     step: this._currentStep
-  }
-  loader.save(this.getName(), saveData);
+  });
 };
 
 CryptoWord.prototype.load = function() {

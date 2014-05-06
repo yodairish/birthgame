@@ -95,8 +95,7 @@ Dashboard.prototype.addQuizContent = function(quizName, content) {
   var quizBlock = document.createElement('div');
   quizBlock.id = 'quiz_' + quizName;
   quizBlock.className = 'quizBlock';
-  quizBlock.appendChild(content);
-  
+  if (content) quizBlock.appendChild(content);
   this._quizzesBlock.appendChild(quizBlock);
 };
 

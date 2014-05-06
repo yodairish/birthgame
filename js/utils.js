@@ -30,4 +30,8 @@ Utils.prototype.getRandom = function(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+Utils.prototype.toRad = function(deg) {
+  return deg * Math.PI / 180;
+};
+
 var utils = new Utils();

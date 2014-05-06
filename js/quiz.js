@@ -18,6 +18,15 @@ Quiz.prototype.init = function() {
   this.cell = document.createElement('li');
   this.cell.addEventListener('touchstart', this._open.bind(this));
   
+  var back = document.createElement('div'),
+      front = document.createElement('div');
+      
+  back.className = 'quizBack';
+  front.className = 'quizFront';
+      
+  this.cell.appendChild(back);
+  this.cell.appendChild(front);
+  
   return this.cell;
 };
 

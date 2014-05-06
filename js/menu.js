@@ -63,12 +63,14 @@ Menu.prototype._homeHandle = function() {
 Menu.prototype._completeHandle = function() {
   if (!this._complete) return false;
   
+  if (this._complete.classList.contains('collapse')) {
+    this._completeAnswer.value = '';
+  }
   this._complete.classList.toggle('collapse');
 };
 
 Menu.prototype._checkAnswer = function() {
   if (!this._completeAnswer) return false;
-  
   dashboard.completeCurrent(this._completeAnswer.value);
 };
 

@@ -86,6 +86,7 @@ Dashboard.prototype.addQuiz = function(quiz) {
   if (cell) {
     this._quizzes[quiz.getName()] = quiz;
     this._dashboardBlock.appendChild(cell);
+    quiz.load();
   }
 };
 

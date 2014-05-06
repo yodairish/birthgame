@@ -68,6 +68,14 @@ Quiz.prototype.checkAnswer = function(answer) {
   else return false;
 };
 
+Quiz.prototype._save = function() {
+  loader.save(this.getName(), '');
+};
+
+Quiz.prototype.load = function() {
+  loader.load(this.getName());
+};
+
 Quiz.prototype._done = function() {
   this.status = true;
   
@@ -77,6 +85,8 @@ Quiz.prototype._done = function() {
   if (this.cell) setTimeout(function(){
     this.cell.classList.add('done');
   }.bind(this), 500);
+  
+  this._save();
 };
 
 Quiz.prototype._open = function() {

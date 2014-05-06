@@ -8,7 +8,7 @@ function CryptoWord() {
   ];
   this._currentStep = 1;
   
-  this._hintTime = 60000;
+  this._hintTime = 4000;
   this._aplhabet = null;
   this._hintsContainer = null;
   this._hintList = null;
@@ -40,6 +40,7 @@ CryptoWord.prototype._createHtmlContent = function() {
     this._addHint.classList.remove('visible');
     this._showHint();
     this._timerButtonHint();
+    this._save();
   }.bind(this));
   
   frag.appendChild(cryptWord);
@@ -137,6 +138,25 @@ CryptoWord.prototype._timerButtonHint = function() {
     this._addHint.classList.add('visible');
     this._timer = -1;
   }.bind(this), this._hintTime);
+};
+
+CryptoWord.prototype._save = function() {
+  var saveData = {
+    status: this.status,
+    step: this._currentStep
+  }
+  loader.save(this.getName(), saveData);
+};
+
+CryptoWord.prototype.load = function() {
+  var data = loader.load(this.getName());
+  if (data) {
+    if (data.status === true) this._done();
+    else {
+      this._currentStep = data.step;
+      this._showCurrentHints();
+    }
+  }
 };
 
 CryptoWord.prototype._open = function() {

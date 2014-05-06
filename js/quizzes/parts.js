@@ -91,7 +91,7 @@ Parts.prototype._changeMessage = function(opt_newMessage) {
   this._messageBoardText.textContent = opt_newMessage;
 };
 
-Quiz.prototype.checkAnswer = function(answer) {
+Parts.prototype.checkAnswer = function(answer) {
   if (answer === this._places[this._curLoc].word) {
     this._curLoc++;
     

@@ -821,4 +821,5 @@ body, html, #quizzesContainer {
   height: 64vh;
   padding: 0 5vw;
   font-size: 7vw;
+  overflow: auto;
 }

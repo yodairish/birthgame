@@ -3,6 +3,7 @@ function Dashboard() {
   this._dashboardBlock = null;
   this._quizzesBlock = null;
   this._currentQuiz = '';
+  this._proccessQuizes = 0;
 }
 
 Dashboard.prototype.init = function(quizzes) {
@@ -84,6 +85,7 @@ Dashboard.prototype.addQuiz = function(quiz) {
   
   var cell = quiz.init();
   if (cell) {
+    this._proccessQuizes++;
     this._quizzes[quiz.getName()] = quiz;
     this._dashboardBlock.appendChild(cell);
     quiz.load();
@@ -116,6 +118,11 @@ Dashboard.prototype.completeCurrent = function(answer) {
   if (this._quizzes[this._currentQuiz] === undefined) return false;
   
   return this._quizzes[this._currentQuiz].checkAnswer(answer);
+};
+
+Dashboard.prototype.finishQuiz = function() {
+  this._proccessQuizes--;
+  if (this._proccessQuizes <= 0) game.finish();
 };
 
 var dashboard = new Dashboard();

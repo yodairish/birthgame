@@ -90,6 +90,7 @@ Quiz.prototype._done = function() {
   }.bind(this), 500);
   
   this._save();
+  dashboard.finishQuiz();
 };
 
 Quiz.prototype._open = function() {

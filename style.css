@@ -77,6 +77,39 @@ body, html, #quizzesContainer {
   border: none;
 }
 
+/* ============ FINISH ================*/
+
+#finish {
+  position: absolute;
+  height: 44vh;
+  width: 75vw;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
+  padding: 3vh 5vw;
+  border: 1vw solid #0A2A8A;
+  overflow: auto;
+  z-index: 500;
+}
+#finishBg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: #CBD8FF;
+  opacity: 0.8;
+  z-index: 1;
+}
+#finishText {
+  position: relative;
+  color: #041F70;
+  font-size: 7vw;
+  z-index: 2;
+}
+
 /* ============ DASHBOARD ================*/
 
 #dashboard {
@@ -769,4 +802,18 @@ body, html, #quizzesContainer {
   border-top: 7px solid transparent; 
   border-bottom: 7px solid transparent; 
   -webkit-transform: translate(9px, -7px);
+}
+
+/* ============ TEXTLOC ================*/
+#quiz_textloc {
+  background-color: #CBD8FF;
+  height: 80vh;
+  top: 0;
+  padding-top: 20vh;
+}
+#textlocText {
+  color: #182292;
+  height: 64vh;
+  padding: 0 5vw;
+  font-size: 7vw;
 }

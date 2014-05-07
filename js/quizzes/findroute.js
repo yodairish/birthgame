@@ -1,7 +1,7 @@
 function FindRoute() {
   this._answer = '\u0068\u0065\u006C\u006C\u006F'; //hello
   this._name = 'findroute';
-  this._quizText = 'Here info text';
+  this._quizText = 'Для следующего слова придеться немного побегать. Мы раздобыли карту, которая указывает место, где должно храниться слово. Точное расположение нам не известно, но к счастью карта заколдована. Когда ты окажешься рядом с местом, она скажет тебе, что нужно делать дальше.';
   this._tipText = 'Here info text';
   
   this._messageBoardText = null;
@@ -172,7 +172,10 @@ FindRoute.prototype._stopTimer = function() {
 };
 
 FindRoute.prototype._checkLocation = function() {
+  if (this._timer > 0) return false;
+  
   this._stopTimer();
+  this._hideInfo();
   this._timerTick = 10;
   this._timerTickProccess();
   this._timer = setInterval(this._timerTickProccess.bind(this), 1000);

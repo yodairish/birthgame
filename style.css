@@ -19,9 +19,10 @@ body, html, #quizzesContainer {
 .infoBoard {
   position: absolute;
   bottom: 0;
-  width: 100% ;
-  height: 79vh;
-  padding: 3vh 5vw;
+  width: 90vw;
+  height: 67vh;
+  padding: 3vh 5vw 15vh;
+  font-size: 7vw;
   overflow: auto;
   z-index: 10;
   background-color: #0A2A8A;
@@ -317,6 +318,7 @@ body, html, #quizzesContainer {
   height: 25px;
 }
 #cryptHints {
+  width: 100%;
   height: 85vh;
   padding: 0;
 }

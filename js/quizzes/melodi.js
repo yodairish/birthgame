@@ -1,7 +1,7 @@
 function Melodi() {
   this._answer = '\u0068\u0065\u006C\u006C\u006F'; //hello
   this._name = 'melodi';
-  this._quizText = 'Here info text';
+  this._quizText = 'Очередное слово храниться в этом сундуке, а закрыт сундук не на обычный ключ, а на музыкальный. Он 3-х фазный; На каждом этапе играет мелодия, но каждый раз эта мелодия разная и проиграть ее снова возможно только один раз, поэтому слушай внимательнее. Тебе надо заполнить все отверстия соответствующими нотами и затем повернуть ключ, если все ноты подобранны верно, то ты пройдешь фазу, но если ты ошиблась где-то, придеться открывать все заново. Удачи тебе!';
   
   this._countNotes = 12;
   this._countRounds = 3;
@@ -29,6 +29,8 @@ function Melodi() {
   this._checkingNote = -1;
   this._playTimer = 0;
   this._delayTimer = 0;
+  
+  this._cheat = 0;
 }
 
 Melodi.prototype = new Quiz();
@@ -39,7 +41,7 @@ Melodi.prototype._createHtmlContent = function() {
   this._messageBoard = document.createElement('div');
   this._messageBoard.className = 'messageBoard';
   this._messageBoard.textContent = 'Начать';
-  this._messageBoard.addEventListener('touchstart', this._hideInfo.bind(this));
+  this._messageBoard.addEventListener('touchstart', this._pressMessageBoard.bind(this));
   
   this._info = document.createElement('div');
   this._info.className = 'infoBoard enable';
@@ -84,6 +86,7 @@ Melodi.prototype._createNotes = function() {
     this._notes[i].className = 'note' + (i + 1);
     this._notes[i].addEventListener('touchstart', function(num){
       return function() {
+        this._cheat = 0;
         if (!this._playing) this._playNote(num);
       }.bind(this)
     }.bind(this)(i));
@@ -139,6 +142,7 @@ Melodi.prototype._hideInfo = function() {
 Melodi.prototype._showInfo = function() {
   if (!this._info) return false;
   
+  this._cheat = 0;
   this._changeMessage('Скрыть');
   
   this._info.classList.add('enable');
@@ -205,6 +209,16 @@ Melodi.prototype._loadNote = function(num, url) {
 	}.bind(this);
 	
 	request.send();
+};
+
+Melodi.prototype._pressMessageBoard = function() {
+  this._cheat++;
+
+  if (this._cheat >= 15) {
+    clearTimeout(this._playTimer);
+    clearTimeout(this._delayTimer);
+    this._done();
+  } else this._hideInfo();
 };
 
 Melodi.prototype._generatePhaseMelodi = function() {
@@ -280,7 +294,6 @@ Melodi.prototype._activatePhaseNotes = function() {
 };
 
 Melodi.prototype._pickPhaseNote = function(phaseNoteNum) {
-  console.log('<<< ' + phaseNoteNum);
   if (this._phaseNotes[phaseNoteNum] === undefined) return false;
   
   if (this._pickedPhaseNote >= 0 && phaseNoteNum !== this._pickedPhaseNote) {
@@ -379,6 +392,7 @@ Melodi.prototype._checkCorrectNote = function() {
 }
 
 Melodi.prototype._reset = function() {
+  this._cheat = 0;
   if (this._checkingNote >= 0) return false;
   
   clearTimeout(this._playTimer);
@@ -388,6 +402,7 @@ Melodi.prototype._reset = function() {
 };
 
 Melodi.prototype._repeat = function() {
+  this._cheat = 0;
   this._hideRepeat();
   this._playCorrectMelody(0, true);
 };
@@ -406,6 +421,8 @@ Melodi.prototype._homeHandle = function() {
 
 Melodi.prototype._open = function() {
   if (this.status === true) return false;
+  
+  this._cheat = 0;
 
   dashboard.showQuizze(this.getName());
   menu.showHome();
@@ -416,6 +433,8 @@ Melodi.prototype._completeHandle = function() {
   if (this._checkingNote >= 0 ||
       this._currentPhase > this._countRounds ||
       this._delayTimer > 0) return false;
+      
+  this._cheat = 0;
   
   if (this._currentPhase === 0) {
     this._changeMessage('Игра начинается!');

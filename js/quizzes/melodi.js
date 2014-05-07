@@ -340,6 +340,7 @@ Melodi.prototype._playNote = function(noteNum) {
   var note = this._audioContext.createBufferSource();
 	note.buffer = this._notesSource[noteNum];
 	note.loop = false;
+	note.gain.value = 1;
   note.connect(this._audioContext.destination);
   note.start(0);
 };

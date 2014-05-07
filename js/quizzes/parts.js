@@ -1,5 +1,5 @@
 function Parts() {
-  this._answer = '\u0068\u0065\u006C\u006C\u006F'; //hello
+  this._answer = '\u006E\u006F\u0077\u006F\u0072\u0064';
   this._name = 'parts';
   this._quizText = 'Еще одно слово лежит в этом сундуке, который закрыт на 4 печати. Чтобы их открыть, надо раздобыть коды для каждой из них. Они спрятанны где-то в королевстве. У нас есть волшебный компас, который укажет где они спрятаны. Следуй за ним и когда соберешь их все, мы сможем открыть сундук.';
   
@@ -16,35 +16,35 @@ function Parts() {
   this._places = [
     {
       tip: null,
-      tipText: 'some tip1',
+      tipText: 'Если с манежной площади стоять лицом перед домом военного ведомства и начать огибать его с левой стороны, где находятся часы, то с противоположной стороны от фонарей на стене, будет водосточная труба, там и надо искать',
       after: null,
-      afterMessage: 'some message',
-      word: 'word1',
-      coords: {lat: 59.9500, lng: 30.3000}
+      afterMessage: 'Молодец, ты нашла его! Осталось еще 3',
+      word: 'moon',
+      coords: {lat: 59.93627, lng: 30.340558}
     },
     {
       tip: null,
-      tipText: 'some tip2',
+      tipText: 'Напротив офисного дома есть 2 трубы, рядом с водосточной, смотри за ними',
       after: null,
-      afterMessage: 'some message2',
-      word: 'word2',
-      coords: {lat: 59.9550, lng: 30.3000}
+      afterMessage: 'Тебе удалось! Еще 2 и мы откроем сундук',
+      word: 'sun',
+      coords: {lat: 59.937114, lng: 30.327517}
     },
     {
       tip: null,
-      tipText: 'some tip3',
+      tipText: 'Если стоять лицом к собору и начать обходить его с правой стороны, в проходе между колоннами, в правом ряду надо искать под центральной',
       after: null,
-      afterMessage: 'some message3',
-      word: 'word3',
-      coords: {lat: 59.9550, lng: 30.3050}
+      afterMessage: 'Восхитительно! Осталась только одна печать!',
+      word: 'wind',
+      coords: {lat: 59.934818, lng: 30.324749}
     },
     {
       tip: null,
-      tipText: 'some tip4',
+      tipText: 'Напротив церкви стоит оранжевое здание с 2-мя козырьками, рядом с правым висит такая же оранжевая водосточная труба, смотри там',
       after: null,
-      afterMessage: 'some message4',
-      word: 'word4',
-      coords: {lat: 59.9500, lng: 30.3050}
+      afterMessage: 'Молодец, ты смогла собрать все печати!',
+      word: 'old',
+      coords: {lat: 59.938484, lng: 30.325962}
     }
   ];
   
@@ -163,8 +163,7 @@ Parts.prototype._showInfo = function() {
 };
 
 Parts.prototype._movePoint = function() {
-  if (this._curLoc === this._places.length - 1) this._marker.setMap(null);
-  else this._marker.setPosition(this._places[this._curLoc].coords);
+  this._marker.setPosition(this._places[this._curLoc].coords);
   
 };
 
@@ -177,18 +176,16 @@ Parts.prototype._userLocation = function(loc) {
                                           
   this._changeMessage(parseInt(distance));
   if (distance > 500) {
-    this._changeMessage('Вы далеко');
+    this._changeMessage('Холодно');
   } else if (distance > 300) {
-    this._changeMessage('Вы рядом');
-  } else if (distance > 100) {
-    this._changeMessage('Вы близко');
-  } else if (distance > 30) {
-    this._changeMessage('Вы почти на месте');
+    this._changeMessage('Теплее');
+  } else if (distance > 70) {
+    this._changeMessage('Горячо');
   } else {
     this._showAfterMessage(true);
     this._showTip();
     this._showInfo();
-    this._changeMessage('Вы на месте');
+    this._changeMessage('Ты на месте');
   }
 };
 

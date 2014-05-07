@@ -1,8 +1,8 @@
 function FindRoute() {
-  this._answer = '\u0068\u0065\u006C\u006C\u006F'; //hello
+  this._answer = '\u0062\u006C\u0061\u0063\u006B';
   this._name = 'findroute';
   this._quizText = 'Для следующего слова придеться немного побегать. Мы раздобыли карту, которая указывает место, где должно храниться слово. Точное расположение нам не известно, но к счастью карта заколдована. Когда ты окажешься рядом с местом, она скажет тебе, что нужно делать дальше.';
-  this._tipText = 'Here info text';
+  this._tipText = 'Рядом с тобой находиться рынок, тебе надо подойти к лестнице ведущей к нему и встать справой ее стороны; Стой лицом к рынку, теперь надо сделать 60 шагов вправо, затем 100 шаков влево, осмотри там ближайшее дерево';
   
   this._messageBoardText = null;
   this._info = null;
@@ -13,7 +13,7 @@ function FindRoute() {
   this._timerTick = 0;
   this._timer = 0;
   
-  this._placeCoord = {lat: 60.008431, lng: 30.38636};
+  this._placeCoord = {lat: 59.864711, lng: 30.314002};
   this._mapOptions = {
     center: this._placeCoord,
     zoom: 14,
@@ -105,8 +105,6 @@ FindRoute.prototype._showTip = function() {
 FindRoute.prototype._initMap = function() {
   if (this._map !== null || this._mapCanvas === null) return false;
   
-  console.log('init findroute');
-  
   this._map = new google.maps.Map(this._mapCanvas, this._mapOptions);
   
   var marker = new google.maps.Marker({
@@ -125,17 +123,15 @@ FindRoute.prototype._userLocation = function(loc) {
                                           
   this._changeMessage(parseInt(distance));
   if (distance > 500) {
-    this._changeMessage('Вы далеко');
+    this._changeMessage('Холодно');
   } else if (distance > 300) {
-    this._changeMessage('Вы рядом');
-  } else if (distance > 100) {
-    this._changeMessage('Вы близко');
-  } else if (distance > 30) {
-    this._changeMessage('Вы почти на месте');
+    this._changeMessage('Теплее');
+  } else if (distance > 70) {
+    this._changeMessage('Горячо');
   } else {
     this._showTip();
     this._showInfo();
-    this._changeMessage('Вы на месте');
+    this._changeMessage('Ты на месте');
   }
 };
 

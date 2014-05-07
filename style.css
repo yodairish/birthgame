@@ -318,7 +318,7 @@ body, html, #quizzesContainer {
 }
 #cryptWord {
   font-size: 15vw;
-  letter-spacing: 5vw;
+  letter-spacing: 3vw;
 }
 #cryptAddHint {
   position: absolute;
@@ -802,6 +802,11 @@ body, html, #quizzesContainer {
   border-top: 7px solid transparent; 
   border-bottom: 7px solid transparent; 
   -webkit-transform: translate(9px, -7px);
+}
+.partsTip, .partsAfter {
+  border-bottom: 3px dashed #CBD8FF;
+  padding-bottom: 2vh;
+  margin-bottom: 2vh;
 }
 
 /* ============ TEXTLOC ================*/
